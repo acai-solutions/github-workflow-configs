@@ -1,2 +1,26 @@
 # github-workflow-configs
-Configuration for Reusable GitHub Workflows
+
+<!-- LOGO -->
+<a href="https://acai.gmbh">    
+  <img src="https://github.com/acai-consulting/acai.public/raw/main/logo/logo_github_readme.png" alt="acai logo" title="ACAI" align="right" height="75" />
+</a>
+
+
+Configurations (tflint, terratest, ...) for GitHub workflows.
+
+<!-- AUTHORS -->
+## Authors
+
+This module is maintained by [ACAI GmbH][acai-url].
+
+<!-- LICENSE -->
+## License
+
+This repository is licensed under AGPL v3
+<br />
+See [LICENSE][license-url] for full details.
+
+<!-- COPYRIGHT -->
+<br />
+<br />
+<p align="center">Copyright &copy; 2025 ACAI GmbH</p>
