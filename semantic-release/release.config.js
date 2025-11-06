@@ -48,6 +48,12 @@ module.exports = {
                 // Complex version string replacement in README.md
                 prepareCmd: createFindCommand('README.md', `sed -i 's|module_version-[0-9]*\\.[0-9]*\\.[0-9]*|module_version-\${nextRelease.version}|g'`)
             }
+        ],        [
+            '@semantic-release/exec',
+            {
+                // Complex version string replacement in README.md
+                prepareCmd: createFindCommand('README.md', `sed -i 's|solution_version-[0-9]*\\.[0-9]*\\.[0-9]*|solution_version-\${nextRelease.version}|g'`)
+            }
         ],
         [
             '@semantic-release/github',
