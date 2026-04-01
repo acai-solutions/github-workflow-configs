@@ -56,6 +56,13 @@ module.exports = {
             }
         ],
         [
+            '@semantic-release/exec',
+            {
+                // Version injection in .py files: VERSION: str = "0.1.0"  # inject_version
+                prepareCmd: createFindCommand('*.py', `sed -i 's|"\\([0-9]*\\.[0-9]*\\.[0-9]*\\)"\\(.*# inject_version\\)|"\${nextRelease.version}"\\2|'`)
+            }
+        ],
+        [
             '@semantic-release/github',
             {
                 successComment: "This ${issue.pull_request ? 'PR is included' : 'issue has been resolved'} in version ${nextRelease.version} :tada:",
@@ -73,7 +80,7 @@ module.exports = {
         [
             '@semantic-release/git',
             {
-                assets: ['CHANGELOG.md', 'README.md', '**/main.tf'],
+                assets: ['CHANGELOG.md', 'README.md', '**/main.tf', '**/*.py'],
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             }
         ]
