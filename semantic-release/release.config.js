@@ -80,7 +80,16 @@ module.exports = {
         [
             '@semantic-release/git',
             {
-                assets: ['CHANGELOG.md', 'README.md', '**/main.tf', '**/*.py', '!node_modules/**'],
+                assets: [
+                    'CHANGELOG.md',
+                    'README.md',
+                    '**/main.tf',
+                    '**/*.py',
+                    '!node_modules',
+                    '!node_modules/**',
+                    '!**/node_modules',
+                    '!**/node_modules/**'
+                ],
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             }
         ]
