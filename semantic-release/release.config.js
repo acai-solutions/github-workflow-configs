@@ -7,12 +7,12 @@ const folderPrefixes = (process.env.SKIP_VERSION_INJECTION_FOLDER_PREFIX || '')
 console.log('DEBUG: Parsed folder prefixes:', folderPrefixes);
 
 function createFindCommand(filePattern, sedCommand) {
-    if (folderPrefixes.length === 0) {
-        return `find . -type f -name '${filePattern}' -exec ${sedCommand} {} +`;
-    }
-    
+    // Always ignore heavy/generated directories regardless of caller input.
+    const fixedExcludedPrefixes = ['node_modules/', '.git/'];
+    const effectivePrefixes = [...fixedExcludedPrefixes, ...folderPrefixes];
+
     // Use -prune for efficient exclusions with proper recursion
-    const excludeArgs = folderPrefixes
+    const excludeArgs = effectivePrefixes
         .map(prefix => `-path './${prefix}*' -prune`)
         .join(' -o ');
 
@@ -78,17 +78,21 @@ module.exports = {
             }
         ],
         [
+            '@semantic-release/exec',
+            {
+                // Stage only tracked file updates; this prevents untracked node_modules from being committed.
+                prepareCmd: 'git add -u'
+            }
+        ],
+        [
             '@semantic-release/git',
             {
                 assets: [
                     'CHANGELOG.md',
                     'README.md',
                     '**/main.tf',
-                    '**/*.py',
-                    '!node_modules',
-                    '!node_modules/**',
-                    '!**/node_modules',
-                    '!**/node_modules/**'
+                    '**/*.py'
+
                 ],
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             }
