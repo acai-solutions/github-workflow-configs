@@ -9,7 +9,7 @@ console.log('DEBUG: Parsed folder prefixes:', folderPrefixes);
 
 function createFindCommand(filePattern, sedCommand) {
     // Always exclude node_modules and .git, plus any configured folder prefixes
-    const allExcludes = ['node_modules', '.git', ...folderPrefixes.map(p => `${p}*`)];
+    const allExcludes = ['node_modules', '.git', 'modules-external', ...folderPrefixes.map(p => `${p}*`)];
     
     const excludeArgs = allExcludes
         .map(pattern => `-path './${pattern}' -prune`)
