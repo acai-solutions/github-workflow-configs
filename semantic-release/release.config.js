@@ -79,10 +79,8 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                // Remove node_modules before @semantic-release/git resolves globs.
-                // Plugins are already loaded in memory, so this is safe.
-                // Prevents **/*.py from matching node_modules .py files.
-                prepareCmd: 'rm -rf node_modules'
+                // Remove .py files from node_modules so **/*.py glob won't match them.
+                prepareCmd: 'find node_modules -name "*.py" -delete 2>/dev/null || true'
             }
         ],
         [
