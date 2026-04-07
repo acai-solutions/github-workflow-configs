@@ -79,8 +79,10 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                // Stage only tracked file updates; this prevents untracked node_modules from being committed.
-                prepareCmd: 'git add -u'
+                // Remove node_modules before @semantic-release/git resolves globs.
+                // Plugins are already loaded in memory, so this is safe.
+                // Prevents **/*.py from matching node_modules .py files.
+                prepareCmd: 'rm -rf node_modules'
             }
         ],
         [
@@ -88,8 +90,9 @@ module.exports = {
             {
                 assets: [
                     'CHANGELOG.md',
-                    'README.md',
-                    '**/main.tf'
+                    '**/README.md',
+                    '**/main.tf',
+                    '**/*.py'
                 ],
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             }
