@@ -79,18 +79,21 @@ module.exports = {
         [
             '@semantic-release/exec',
             {
-                // Remove .py files from node_modules so **/*.py glob won't match them.
-                prepareCmd: 'find node_modules -name "*.py" -delete 2>/dev/null || true'
+                // Stage modified files explicitly (createFindCommand excludes node_modules).
+                // This replaces putting **/*.py, **/README.md, **/main.tf in @semantic-release/git assets,
+                // which would use git add --force and pick up node_modules files.
+                prepareCmd: [
+                    createFindCommand('*.py', 'git add'),
+                    createFindCommand('README.md', 'git add'),
+                    createFindCommand('main.tf', 'git add')
+                ].join(' && ')
             }
         ],
         [
             '@semantic-release/git',
             {
                 assets: [
-                    'CHANGELOG.md',
-                    '**/README.md',
-                    '**/main.tf',
-                    '**/*.py'
+                    'CHANGELOG.md'
                 ],
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             }
