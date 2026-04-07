@@ -89,9 +89,7 @@ module.exports = {
                 assets: [
                     'CHANGELOG.md',
                     'README.md',
-                    '**/main.tf',
-                    '**/*.py'
-
+                    '**/main.tf'
                 ],
                 message: 'chore(release): version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
             }
