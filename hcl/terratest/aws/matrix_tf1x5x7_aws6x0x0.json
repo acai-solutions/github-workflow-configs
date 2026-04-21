@@ -1,0 +1,18 @@
+{
+    "include": [
+        {
+            "hcl_engine_version": "= 1.5.7",
+            "hcl_engine": "terraform",
+            "provider_version": {
+                "hashicorp/aws": "6.0.0"
+            }
+        },
+        {
+            "hcl_engine_version": ">= 1.6",
+            "hcl_engine": "terraform",
+            "provider_version": {
+                "hashicorp/aws": "6.X.X"
+            }
+        }
+    ]
+}
